@@ -126,7 +126,11 @@ class Auth {
 	 * @return \PHPixie\Auth\Login\Provider  Login Provider
 	 */
 	public function build_login($provider, $service, $config) {
-		$login_class = '\PHPixie\Auth\Login\\'.ucfirst($provider);
+    if ('\\' == substr($provider, 0, 1)) {
+      $login_class = $provider;
+    } else {
+      $login_class = '\PHPixie\Auth\Login\\'.ucfirst($provider);
+    }
 		return new $login_class($this->pixie, $service, $config);
 	}
 	
